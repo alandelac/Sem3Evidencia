@@ -67,8 +67,5 @@ int ftoi(string fecha){
 	salida += (aux*10000);
 	return salida;
 }
-int main(){
-	string fecha;
-	cin >> fecha;
-	cout << ftoi(fecha) << endl;
-}
+
+
