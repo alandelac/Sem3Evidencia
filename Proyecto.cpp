@@ -49,14 +49,34 @@ int main() {
 
     sort(mivec.begin(), mivec.end(), acompare); //QuickSort O(nlog(n))
 
+    // Ubi a buscar
     string serieABuscar;
-    cout << "Cuál es la serie a buscar? (Primeros 3 caracteres del ubi): ";
+    cout << "Cual es la serie a buscar? (Primeros 3 caracteres del ubi): ";
     cin >> serieABuscar;
 
-    // Búsqueda secuencial O(n)
-    for(int i = 0; i < mivec.size(); i++) {
-        if(serieABuscar == mivec[i].ubi.substr(0, 3)) {
-            cout << mivec[i].ubi << " " << mivec[i].fecha << " " << mivec[i].hora << " " << mivec[i].entrada  << endl ;
+    //Vector de Ubis con posición igual al vector de registros
+    vector<string>ubis;
+    for(int i = 0; i<mivec.size();i++){
+        ubis.push_back(mivec[i].ubi.substr(0, 3));
+    }
+
+    // [Low, ..., High] Rango de búsqueda para el UBI seleccionado
+    // Búsqueda Binaria para cada límite, complejidad O(log(n)) 
+    std::vector<string>::iterator low, up;
+
+    low = std::lower_bound(ubis.begin(), ubis.end(), serieABuscar);
+    up = std::upper_bound (ubis.begin(), ubis.end(), serieABuscar);
+
+    //Convertir iterador en int
+    int indexB = std::distance( ubis.begin(), low );
+    int indexE = std::distance( ubis.begin(), up );
+
+    if(indexB == 0 && indexE == 0){
+        cout<<"No se encontro un registro con el UBI seleccionado"<<endl;
+    } else {
+        //Se imprimen todos los registros buscados por UBI
+        for(int j = indexB ; j < indexE ; j++){
+            cout << mivec[j].ubi << " " << mivec[j].fecha << " " << mivec[j].hora << " " << mivec[j].entrada  << endl ;
         }
     }
 
