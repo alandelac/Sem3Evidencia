@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 #include "fecha.cpp"
 using namespace std;
 
@@ -14,11 +15,11 @@ struct registro {
 };
 
 #include "LinkedList.h"
-
 int main() {
     
     LinkedList<registro> listMediterraneo;
     LinkedList<registro> listRojo;
+    //LinkedList<registro> listaCompleta;
 
     string nombreArchivo; // nombre del archivo
     ifstream archivoCanal; // apertura del archivo
@@ -44,11 +45,14 @@ int main() {
         } else {
             listRojo.addLast(reg);
         }
-        
+        //listaCompleta.addLast(reg);
     }
-
+    
+    //listaCompleta.SortListBy3UBI();
+    
     listMediterraneo.SortList();
     listRojo.SortList();
+    
 
     string archM;
     cout <<"Como quieres que se llame el archivo Mediterraneo?"<<endl;
@@ -57,13 +61,16 @@ int main() {
     string archR;
     cout <<"Como quieres que se llame el archivo Rojo?"<<endl;
     cin >> archR;
-    listMediterraneo.saveInFile(archR);
+    listRojo.saveInFile(archR);
 
     // Ubi a buscar
-    /*string serieABuscar;
-    cout << "Cual es la serie a buscar? (Primeros 3 caracteres del ubi): ";
-    cin >> serieABuscar;
+    //string serieABuscar;
+    //cout << "Cual es la serie a buscar? (Primeros 3 caracteres del ubi): ";
+    //cin >> serieABuscar;
 
+    //listaCompleta.buscarUbiPorMes(serieABuscar);
+    
+    /*
     //Vector de Ubis con posición igual al vector de registros
     vector<string>ubis;
     for(int i = 0; i<mivec.size();i++){

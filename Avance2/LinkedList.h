@@ -20,7 +20,9 @@ class LinkedList{
         int getSize();
         void print();
         void SortList();
+        void SortListBy3UBI();
         void saveInFile(string a);
+        void buscarUbiPorMes(string busqueda);
 
         void reverse();
         void shift(int n);
@@ -208,13 +210,45 @@ void LinkedList<T>::saveInFile(string a){
     ofstream archivoM(a + ".txt");
     Node <T> *curr = head;
     while (curr != nullptr){
-        registro r1 = curr->getData()
+        registro r1 = curr->getData();
         archivoM << r1.ubi << " " << r1.fecha << " " << r1.hora << " " << r1.entrada  << endl ;
+        curr = curr ->getNext();
     }
     archivoM.close();
 }
 
-
+template <class T>
+void LinkedList<T>::buscarUbiPorMes(string busqueda){
+    Node<T> *curr = head;
+    registro rViaje = curr->getData();
+    vector<string> buquesPorMes; 
+    int contMediterraneo = 0;
+    int contRojo = 0;
+    vector<int> meses;
+    while(curr != nullptr){
+        cout<<rViaje.fecha<<endl;
+        while (rViaje.ubi.substr(0, 3) == busqueda){
+            if(meses.back() == (rViaje.fechaInt%100)/100){
+                
+            } else {
+                cout<<(rViaje.fechaInt%100)/100<<endl;
+                meses.push_back((rViaje.fechaInt%100)/100);
+            }
+            //cout<<rViaje.ubi<< " "<< rViaje.fecha<< " "<< rViaje.fechaInt<<endl;
+            curr = curr -> getNext();
+            rViaje = curr->getData();
+        }
+        if(rViaje.ubi.substr(0, 3) == busqueda){
+            break;
+        }
+        curr = curr ->getNext();
+        rViaje = curr->getData();
+    }
+    for(int i = 0; i<meses.size(); i++){
+        cout<<"Entroo"<<endl;
+        cout<<meses[i];
+    }
+}
 
 
 #include "LinkedList_2_1.h"

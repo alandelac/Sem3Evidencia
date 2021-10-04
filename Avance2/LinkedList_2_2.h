@@ -80,3 +80,28 @@ void LinkedList<T>::SortList() {
         }
     }
 }
+
+template <class T>
+void LinkedList<T>::SortListBy3UBI() {
+    if(size > 1){
+        Node<T> *curr1 = head;
+        Node<T> *curr2 = curr1;
+
+        while(curr1->getNext() != nullptr){
+            curr2 = curr1 ->getNext();
+            while (curr2 != nullptr){
+                registro r1 = curr1->getData();
+                registro r2 = curr2->getData();
+                if(r1.ubi.substr(0, 3) > r2.ubi.substr(0, 3)){
+                    curr1 -> setData(r2);
+                    curr2 -> setData(r1);
+                } else if(r1.ubi.substr(0, 3) == r2.ubi.substr(0, 3) && r1.fechaInt > r2.fechaInt){
+                    curr1 -> setData(r2);
+                    curr2 -> setData(r1);
+                }
+                curr2 = curr2 ->getNext();
+            }
+            curr1 = curr1 ->getNext();
+        }
+    }
+}
