@@ -221,33 +221,59 @@ template <class T>
 void LinkedList<T>::buscarUbiPorMes(string busqueda){
     Node<T> *curr = head;
     registro rViaje = curr->getData();
-    vector<string> buquesPorMes; 
-    int contMediterraneo = 0;
-    int contRojo = 0;
-    vector<int> meses;
+    vector<contBuques> fechasDeSalida;
+    int i = 0;
     while(curr != nullptr){
-        cout<<rViaje.fecha<<endl;
         while (rViaje.ubi.substr(0, 3) == busqueda){
-            if(meses.back() == (rViaje.fechaInt%100)/100){
-                
-            } else {
-                cout<<(rViaje.fechaInt%100)/100<<endl;
-                meses.push_back((rViaje.fechaInt%100)/100);
+            string fecha = rViaje.fecha.substr(rViaje.fecha.find("-") + 1);
+
+            //Primera iteración
+            if(fechasDeSalida.empty()){
+                contBuques aux;
+                aux.fechaSalida = fecha;
+                if(rViaje.entrada == 'R') {
+                    aux.contRojo = 1;
+                    aux.contMedi = 0;
+                } else { 
+                    aux.contRojo = 0;
+                    aux.contMedi = 1; 
+                }
+                fechasDeSalida.push_back(aux);
             }
-            //cout<<rViaje.ubi<< " "<< rViaje.fecha<< " "<< rViaje.fechaInt<<endl;
+            //Si la fecha es igual a la fecha anterior
+            else if(fecha == fechasDeSalida[i].fechaSalida) {
+                if(rViaje.entrada == 'R') {
+                    fechasDeSalida[i].contRojo++;
+                } else { fechasDeSalida[i].contMedi++; }
+            }
+
+            //Nuevo Mes
+            else {
+                contBuques aux;
+                aux.fechaSalida = fecha;
+                if(rViaje.entrada == 'R') {
+                    aux.contRojo = 1;
+                    aux.contMedi = 0;
+                } else { 
+                    aux.contMedi = 1; 
+                    aux.contRojo = 0;
+                }
+                fechasDeSalida.push_back(aux);
+                i++;
+            }
             curr = curr -> getNext();
             rViaje = curr->getData();
         }
-        if(rViaje.ubi.substr(0, 3) == busqueda){
-            break;
-        }
         curr = curr ->getNext();
-        rViaje = curr->getData();
+        if(curr != nullptr){ rViaje = curr->getData(); };
     }
-    for(int i = 0; i<meses.size(); i++){
-        cout<<"Entroo"<<endl;
-        cout<<meses[i];
-    }
+
+
+    for(int j = 0; j<fechasDeSalida.size(); j++){
+
+        fechasDeSalida[j].fechaSalida[3] = ' ';
+        cout<<fechasDeSalida[j].fechaSalida<<" "<<fechasDeSalida[j].contMedi<<" "<<fechasDeSalida[j].contRojo<<endl;
+    }   
 }
 
 
