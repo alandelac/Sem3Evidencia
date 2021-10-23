@@ -37,13 +37,13 @@ void BST::add(dataCS data){
 		NodeT *curr = root;
 		NodeT *parent = nullptr;
 		while (curr != nullptr){
-			if (curr->getData().nombre == data.nombre){
+			if (curr->getData() == data){
 				return;
 			}
 			parent = curr;
-			curr = (curr->getData().nombre > data.nombre) ? curr->getLeft() : curr->getRight();
+			curr = (curr->getData() > data) ? curr->getLeft() : curr->getRight();
 		}
-		parent->getData().nombre > data.nombre ? parent->setLeft(new NodeT(data)) : parent->setRight(new NodeT(data));
+		parent->getData() > data ? parent->setLeft(new NodeT(data)) : parent->setRight(new NodeT(data));
 	}
 }
 
@@ -55,7 +55,7 @@ void BST::print(){
 void BST::inOrdenC(NodeT *r){
 	if (r != nullptr){
 		inOrdenC(r->getRight());
-		cout << r->getData() << " ";
+		cout << r->getData();
 		inOrdenC(r->getLeft());
 	}
 }
