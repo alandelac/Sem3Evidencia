@@ -1,5 +1,3 @@
-// Matrícula:
-// Nomber:
 #include "NodeT.h"
 
 class BST{
@@ -14,14 +12,17 @@ class BST{
 		void destuye_Helper(NodeT *r);
 };
 
+// constructor default
 BST::BST(){
 	root = nullptr;
 }
 
+// destruir el arbol
 BST::~BST(){
 	destuye_Helper(root);
 }
 
+// para borrar el arbol: Complejidad O(n)
 void BST::destuye_Helper(NodeT *r){
 	if (r != nullptr){
 		destuye_Helper(r->getLeft());
@@ -29,10 +30,16 @@ void BST::destuye_Helper(NodeT *r){
 		delete r;
 	}
 }
+
+// añadir un nuevo nodo al arbol. Complejidad O(n)
 void BST::add(dataCS data){
+	
+	// si la raiz es nula agregar el dato al principio
 	if (root == nullptr){
 		root = new NodeT(data);
 	}
+
+	// acomodar el dato en el lugar correcto
 	else{
 		NodeT *curr = root;
 		NodeT *parent = nullptr;
@@ -47,11 +54,13 @@ void BST::add(dataCS data){
 	}
 }
 
+// imprimir el arbol complejidad O(1)
 void BST::print(){
 	inOrdenC(root);
 	cout << endl;
 }
 
+// acomodar el arbol e imprimir los datos complejidad O(n)
 void BST::inOrdenC(NodeT *r){
 	if (r != nullptr){
 		inOrdenC(r->getRight());

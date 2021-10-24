@@ -36,9 +36,10 @@ int main()
     archivoCanalRojo >> ubi >> fecha >> hora >> entrada;
     aux = ubi;
 
-
+    // aqui se construye el BST para el canal rojo
     while (archivoCanalRojo >> ubi >> fecha >> hora >> entrada)
     { 
+        // si el ubi es diferente termina de contar y agrega al arbol, sigue con la sig ubi
         if (aux.substr(0, 3) != ubi.substr(0, 3)) {
             dataCS temp1(contador, aux.substr(0, 3));
             arbolRojo.add(temp1);
@@ -50,13 +51,13 @@ int main()
     dataCS temp1(contador, ubi.substr(0, 3));
     arbolRojo.add(temp1);
 
-
-
+    // aqui se construye el BST para el canal medi
     archivoCanalMedi >> ubi >> fecha >> hora >> entrada;
     aux = ubi;
     contador = 1;
     while (archivoCanalMedi >> ubi >> fecha >> hora >> entrada)
     { 
+        // si el ubi es diferente termina de contar y agrega al arbol, sigue con la sig ubi
         if (aux.substr(0, 3) != ubi.substr(0, 3)) {
             dataCS temp2(contador, aux.substr(0, 3));
             arbolMedi.add(temp2);
@@ -68,7 +69,7 @@ int main()
     dataCS temp2(contador, ubi.substr(0, 3));
     arbolMedi.add(temp2);
 
-
+    // se imprimen los resultados de ambos arboles
     cout << "Entradas Mar ROJO" << endl;
     arbolRojo.print();
     cout << "Entradas Mar MEDITERRANEO" << endl;
