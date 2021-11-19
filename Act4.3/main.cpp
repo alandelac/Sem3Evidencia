@@ -31,59 +31,53 @@ void loadGraph(int n, int m, vector<string> &puertos, vector<vector<int>> &listA
 
 void printMatAdj(vector<string> puertos, vector<vector<int>> &listAdj, int n) {
     for(int i=0; i<listAdj.size(); i++) {
-        cout << (puertos[i]) << " ";
+        cout << (i) << " ";
         for(int j=0; j<listAdj[i].size(); j++) {
-            cout << " ==> " << (puertos[listAdj[i][j]]);
+            cout << " ==> " << (listAdj[i][j]);
         }
         cout << endl;
     }
 }
 
 // Complejidad: O(|V| + |E|)
-void BFS(string puerto, int mnp, vector<vector<int>> &listAdj,  vector<string> &puertos) {
-    pair<int, int> pareja;
+int BFS(string puerto, int mnp, vector<vector<int>> &listAdj,  vector<string> &puertos) {
+    pair<int, int> pareja, parejaAux;
     queue<pair<int, int>> fila;
     vector<bool> status(listAdj.size(), false);
     int altura = 1;
     int pos;
+    int contador = 1;
 
     for(int i = 0; i < puertos.size(); i++) {
         if(puertos[i].compare(puerto) == 0) {
             pos = i;
         }
     }
-     
-    for(int j = 0; j < listAdj.size(); j++) {
-        for(int k = 0; k<listAdj[pos].size(); k++) {
-            
-        }
+    status[pos] = true;
+    
+    for(int j = 0; j < listAdj[pos].size(); j++) {
+        pareja.first = listAdj[pos][j];
+        pareja.second = altura;
+        fila.push(pareja);
     }
 
-
-
-
-
     
-    // for (int i=0; i<listAdj.size(); i++) {
-    //     if(!status[i]) {
-    //         pareja.first = i;
-    //         pareja.second = altura;
-    //         fila.push(pareja);
-    //         status[i] = true;
-            
-    //         while (!fila.empty()) {
-    //             dato = fila.front();
-    //             fila.pop();
-    //             cout <<  (dato+1) << " ";
-    //             for(int j=0; j<listAdj[dato].size(); j++) {
-    //                 if(!status[listAdj[dato][j]]) {
-    //                     fila.push(listAdj[dato][j]);
-    //                     status[listAdj[dato][j]] = true;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+    while(!fila.empty() && fila.front().second <= mnp) {
+        pareja = fila.front();
+        fila.pop();
+
+        if(status[pareja.first] == false) {
+            contador++;
+            status[pareja.first] = true;
+        }
+
+        for(int k = 0; k < listAdj[pareja.first].size(); k++) {
+            parejaAux.first = listAdj[pareja.first][k];
+            parejaAux.second = pareja.second + 1;
+            fila.push(parejaAux);
+        }
+    }
+    return listAdj.size() - contador;
 }
 
 int main () {
@@ -95,15 +89,12 @@ int main () {
 
     
     loadGraph(n, m, puertos, listAdj); // Hacer la matriz y lista de Adyacencias
+    // printMatAdj(puertos, listAdj, n);
 
     cin >> q;
     for(int i = 0; i < q; i++) {
         cin >> puerto;
         cin >> mnp;
-        BFS(puerto, mnp, listAdj, puertos);
+        cout << BFS(puerto, mnp, listAdj, puertos) << endl;
     }
-
-
-    // printMatAdj(puertos, listAdj, n);
-    
 }
